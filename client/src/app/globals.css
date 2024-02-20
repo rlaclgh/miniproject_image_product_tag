@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::-webkit-scrollbar {
+  /* Chrome, Safari, Opera */
+  display: none;
+}
+
+:root {
+  --vh: 100%;
+}
+
+html,
+body {
+  height: 100vh;
+  height: var(--vh);
+}
