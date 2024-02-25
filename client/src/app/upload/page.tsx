@@ -1,4 +1,5 @@
 import Header from "@/components/header";
+import ImageTag from "@/components/image_tag";
 import ImageUploadForm from "@/components/image_upload_form";
 
 const UploadPage = () => {

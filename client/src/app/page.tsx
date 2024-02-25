@@ -1,33 +1,36 @@
 "use client";
 import Header from "@/components/header";
-import { useEffect, useState } from "react";
+import ImageWithTag from "@/components/image_with_tag";
+import { useGetImages } from "@/query/image";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const [helloWorld, setHelloWorld] = useState("불러오는중....");
+  const { data: images } = useGetImages();
 
-  useEffect(() => {
-    const getHelloWorld = async () => {
-      const response = await fetch(
-        process.env.NEXT_PUBLIC_SERVER_URL || "http://127.0.0.1:8080",
-        {
-          method: "GET",
-        }
-      );
-      const result = await response.text();
+  const router = useRouter();
 
-      setHelloWorld(result);
-    };
-
-    getHelloWorld();
-  }, []);
+  if (!images) return <></>;
 
   return (
     <div>
-      <Header renderCenter={() => <div>메인 페이지</div>} />
+      <Header
+        renderCenter={() => <div>메인 페이지</div>}
+        renderRight={() => (
+          <div
+            onClick={() => {
+              router.push("/upload");
+            }}
+          >
+            생성
+          </div>
+        )}
+      />
 
-      <div className="flex justify-center items-center h-screen">
-        <div>{helloWorld}</div>
-      </div>
+      {images?.map((image) => {
+        return <ImageWithTag {...image} key={image.id} />;
+      })}
+
+      <div className="flex justify-center items-center h-screen"></div>
     </div>
   );
 }
